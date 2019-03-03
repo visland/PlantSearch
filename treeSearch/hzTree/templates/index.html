@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="container" id="container">
+        <div id="page-header">
+            <h1 class="text-center"> 植物查询系统 </h1>
+        </div>
+
+        <div class="row">
+        <form action="" method="GET" class="form-horizontal" role="form">
+            <div id="checkbox" class="text-center">
+                <label class="checkbox-inline text-success">默认采用完整匹配</label>
+            </div>
+
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-2 col-md-offset-0">
+                    {{ form.condition }}
+
+                    {% comment %}
+                    {{ form.condition }} 在 html 中将被渲染成以下代码
+                    <select name='condition' title="query condition" class="form-control">
+                        <option >用户名</option>
+                        <option>密码</option>
+                    </select>
+                    {% endcomment %}
+                    
+                </div>
+
+                <div class="input-group col-md-10 col-md-offset-1">
+                    {{ form.queryContent.field.errors }}
+                    {{ form.queryContent }}
+
+                    {% comment %}
+                    {{ form.queryContent }} 在 html 中将被渲染成以下代码
+                    <input type="text" class="form-control is-invalid" name="q" placeholder="请输入内容..." value="">
+                    {% endcomment %}
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-primary" required >Search</button>
+                        <div class="invalid-feedback">
+                            Please provide a valid value.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        </div>
+        <br>
+    </div>
+</body>
+</html>
