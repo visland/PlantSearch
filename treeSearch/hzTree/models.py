@@ -5,9 +5,10 @@ class Tree(models.Model):
     zname = models.CharField(max_length=64)
     kname = models.CharField(max_length=64)
     
-    # class Meta:
-    #     managed = True
-        # db_table = 'SocialUsers'
+    class Meta:
+        managed = True
+        # db_table = 'Trees'
+
     def __str__(self):        
         return self.zname
 
