@@ -1,0 +1,23 @@
+[
+    {
+        "model":"hzTree.Tree",
+        "fields": {
+            "zname":"香樟",
+            "kname":"樟科"
+        }
+    },
+    {
+        "model":"hzTree.Tree",
+        "fields": {
+            "zname":"银杏",
+            "kname":"银杏科"
+        }
+    },
+    {
+        "model":"hzTree.Tree",
+        "fields": {
+            "zname":"桂花",
+            "kname":"木樨科"
+        }
+    }
+]
