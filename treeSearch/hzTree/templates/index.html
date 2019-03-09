@@ -16,31 +16,14 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="col-md-2 col-md-offset-0">
                     {{ form.condition }}
-
-                    {% comment %}
-                    {{ form.condition }} 在 html 中将被渲染成以下代码
-                    <select name='condition' title="query condition" class="form-control">
-                        <option >用户名</option>
-                        <option>密码</option>
-                    </select>
-                    {% endcomment %}
-
                 </div>
 
                 <div class="input-group col-md-10 col-md-offset-1">
                     {{ form.queryContent.field.errors }}
                     {{ form.queryContent }}
-
-                    {% comment %}
-                    {{ form.queryContent }} 在 html 中将被渲染成以下代码
-                    <input type="text" class="form-control is-invalid" name="q" placeholder="请输入内容..." value="">
-                    {% endcomment %}
-
+                    {{ form.queryContent2 }}
                     <div class="input-group-btn">
                         <button type="submit" class="btn btn-primary" required >Search</button>
-                        <div class="invalid-feedback">
-                            Please provide a valid value.
-                        </div>
                     </div>
                 </div>
             </div>
@@ -67,13 +50,31 @@
                         <table class="table table-striped table-hover">
                         <tr>
                         <th class="text-center">中文名</th>
+                        <th class="text-center">拉丁名</th>
                         <th class="text-center">科名</th>
+                        <th class="text-center">属名</th>
+                        <th class="text-center">别名</th>
+                        <th class="text-center">形态</th>
+                        <th class="text-center">花期</th>
+                        <th class="text-center">花色</th>
+                        <th class="text-center">果期</th>
+                        <th class="text-center">果色</th>
+                        <th class="text-center">叶色</th>
                         </tr>
 
                         {% for user in users %}
                             <tr>
                             <td class="text-center">{{ user.zname }}</td>
+                            <td class="text-center">{{ user.ldname }}</td>
                             <td class="text-center">{{ user.kname }}</td>
+                            <td class="text-center">{{ user.sname }}</td>
+                            <td class="text-center">{{ user.biename }}</td>
+                            <td class="text-center">{{ user.morphology }}</td>
+                            <td class="text-center">{{ user.bloom_date }}</td>
+                            <td class="text-center">{{ user.bloom_color }}</td>
+                            <td class="text-center">{{ user.fruit_date }}</td>
+                            <td class="text-center">{{ user.fruit_color }}</td>
+                            <td class="text-center">{{ user.leaf_color }}</td>
                             </tr>
                         {% endfor %}
                         </table>
