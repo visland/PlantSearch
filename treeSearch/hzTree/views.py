@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db import connection
 from django.shortcuts import render
+from django.db.models import Q
 
 from .forms.forms import QueryUserForm
 from .models import Tree
@@ -16,27 +17,31 @@ def index(request):
         # 验证表单
         if form.is_valid():
             # 过滤需要的数据
-            condition = form.cleaned_data['condition']
             keywords = form.cleaned_data['queryContent']
+            bloom_color_checked = form.cleaned_data['bloom_color_condition']
+            fruit_color_checked = form.cleaned_data['fruit_color_condition']
 
-            print('condition == ' + condition)
-            print('keywords == ' + keywords)
+            user_list = Tree.objects
+            
+            # 文本输入框查询结果
+            if keywords:
+                user_list = user_list.filter(Q(kname__icontains=keywords)|Q(sname__icontains=keywords)|Q(zname__icontains=keywords)|Q(ldname__icontains=keywords)|Q(biename__icontains=keywords)|Q(morphology__icontains=keywords))
+            
+            # 高级查询结果
+            q = Q()
+            for elem in bloom_color_checked:
+                q = q | Q(bloom_color__icontains=elem)
+            f = Q()
+            for elem in fruit_color_checked:
+                f = f | Q(fruit_color__icontains=elem)
+            user_list = user_list.filter(q & f)
 
             countNum = 0
-            # 查询结果
-            if condition == 'zname':
-                user_list = Tree.objects.filter(zname__icontains=keywords)
-            elif condition == 'kname':
-                user_list = Tree.objects.filter(kname__icontains=keywords)
-                
             countNum = user_list.count()
-            # 获取查询耗时
             time = (connection.queries)[0].get('time')
-            print('user_list size=== ', user_list.count())
-            print('time === ', time)
 
-            # 显示分页操作, 每页显示 20 条
-            paginator = Paginator(user_list, 20)
+            # 显示分页操作, 每页显示 10 条
+            paginator = Paginator(user_list, 10)
             page = request.GET.get('page')
             try:
                 users = paginator.page(page)
@@ -49,13 +54,12 @@ def index(request):
 
             return render(request, templateView, {
                     'countNum': countNum,
-                    'condition': condition,
+                    # 'condition': condition,
                     'keywords': keywords,
                     'form': form,
                     'users': users,
                     'time': time,
                 })
-
 
             # 查询不到数据, 显示没有数据的浮窗
             if countNum == 0:

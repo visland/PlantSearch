@@ -1,36 +1,33 @@
 from django import forms
+from django.forms import ModelForm, Select, TextInput, CheckboxSelectMultiple
 
-from django.forms import ModelForm, Select, TextInput
-from hzTree.models import QueryUser
+BLOOM_COLOR_CONDITION_CHOICES = (
+    ('红色', '红色'),
+    ('黄色', '黄色'),
+    ('紫色', '紫色'),
+)
 
-class QueryUserForm(ModelForm):
-    class Meta:
-        model = QueryUser
-        fields = ['condition', 'queryContent', 'queryContent2',]
-        # 指定呈现样式字段、指定 CSS 样式
-        widgets = {
-            'condition': Select(attrs={'class':"form-control",
-                                    'title':"query condition",
-                                    'name':'condition',
-                                    }),
-            'queryContent':TextInput(attrs={'class': 'form-control is-invalid',
-                                      'name': 'queryContent',
-                                      'placeholder': '请输入需要查询的内容...'
-                                      }),
-            'queryContent2':TextInput(attrs={'class': 'form-control is-invalid',
-                'name': 'queryContent',
-                'placeholder': '请输入需要查询的内容...'
-                })
-        }
+FRUIT_COLOR_CONDITION_CHOICES = (
+    ('白色', '白色'),
+    ('黄色', '黄色'),
+    ('红色', '红色'),
+)
 
-        localized = {
-            'condition':('zname', '中文名'),
-            'queryContent':123
-        }
+class QueryUserForm(forms.Form):
+    queryContent = forms.CharField(required=False,
+                                    widget=forms.TextInput(attrs={'class': 'form-control is-invalid',
+                                                                'placeholder': 'I Love you :)'}))
 
-        # 自定义错误信息
-        error_messages = {
-            'queryContent':{
-                'required': '查询内容不能为空 !',
-            }
-        }
+    bloom_color_condition = forms.MultipleChoiceField(
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
+        choices=BLOOM_COLOR_CONDITION_CHOICES,
+    )
+
+    fruit_color_condition = forms.MultipleChoiceField(
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
+        choices=FRUIT_COLOR_CONDITION_CHOICES,
+    )
+
+    

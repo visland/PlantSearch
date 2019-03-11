@@ -10,20 +10,24 @@
         <div class="row">
         <form action="" method="GET" class="form-horizontal" role="form">
             <div id="checkbox" class="text-center">
-                <label class="checkbox-inline text-success">默认采用完整匹配</label>
+                <label class="checkbox-inline text-success">在输入框中输入想查询内容或使用高级搜索功能</label>
             </div>
-
+            <br>
             <div class="col-md-10 col-md-offset-1">
-                <div class="col-md-2 col-md-offset-0">
-                    {{ form.condition }}
-                </div>
-
+                花色：
+                {% for checkbox in form.bloom_color_condition %}
+                    {{ checkbox }}
+                {% endfor %}
+                <br>
+                果色：
+                {% for checkbox in form.fruit_color_condition %}
+                    {{ checkbox }}
+                {% endfor %}
                 <div class="input-group col-md-10 col-md-offset-1">
-                    {{ form.queryContent.field.errors }}
+                    <br>
                     {{ form.queryContent }}
-                    {{ form.queryContent2 }}
                     <div class="input-group-btn">
-                        <button type="submit" class="btn btn-primary" required >Search</button>
+                        <button type="submit" class="btn btn-primary" required>查找</button>
                     </div>
                 </div>
             </div>
@@ -37,14 +41,17 @@
                     <button type="button" class="close" data-dismiss="alert">
                     <span aria-hidden="true">&times;</span>
                     <span class="sr-only">Close</span></button>
-                    找不到与<b>&nbsp{{ keywords }}&nbsp</b>相关的结果。请更换其他<b>&nbsp关键词或类型&nbsp</b>试试。</div></div>
+                    找不到相关的结果。请更换其他<b>&nbsp关键词或类型&nbsp</b>试试。</div></div>
             {% else %}
                 <div class="row">
                     <div class="alert alert-success alert-dismissible col-md-10 col-md-offset-1" role="alert">
+                        {% comment %}
                         <button type="button" class="close" data-dismiss="alert">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">Close</span></button>
-                        找到与<b>&nbsp {{ keywords }} &nbsp</b>相关的结果 {{ countNum }} 个。用时 {{ time }} 秒。
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        {% endcomment %}
+                        找到相关结果 {{ countNum }} 个。用时 {{ time }} 秒。
                     </div>
                     <div class="table-responsive col-md-12">
                         <table class="table table-striped table-hover">
