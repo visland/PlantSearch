@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.db.models import Q
 
 from .forms.forms import QueryUserForm
-from .models import Tree
+from .models import Tree, Months
 
 def index(request):
     templateView = 'index.html'
@@ -20,21 +20,27 @@ def index(request):
             keywords = form.cleaned_data['queryContent']
             bloom_color_checked = form.cleaned_data['bloom_color_condition']
             fruit_color_checked = form.cleaned_data['fruit_color_condition']
+            bloom_date_condition = form.cleaned_data['bloom_date_condition']
+            fruit_date_condition = form.cleaned_data['fruit_date_condition']
 
             user_list = Tree.objects
             
             # 文本输入框查询结果
             if keywords:
                 user_list = user_list.filter(Q(kname__icontains=keywords)|Q(sname__icontains=keywords)|Q(zname__icontains=keywords)|Q(ldname__icontains=keywords)|Q(biename__icontains=keywords)|Q(morphology__icontains=keywords))
-            
+            if bloom_date_condition != "任意":
+                user_list = user_list.filter(bloom_date__name__contains=bloom_date_condition)
+            if fruit_date_condition != "任意":
+                user_list = user_list.filter(fruit_date__name__contains=fruit_date_condition)
+
             # 高级查询结果
-            q = Q()
+            b = Q()
             for elem in bloom_color_checked:
-                q = q | Q(bloom_color__icontains=elem)
+                b = b | Q(bloom_color__icontains=elem)
             f = Q()
             for elem in fruit_color_checked:
                 f = f | Q(fruit_color__icontains=elem)
-            user_list = user_list.filter(q & f)
+            user_list = user_list.filter(b & f)
 
             countNum = 0
             countNum = user_list.count()

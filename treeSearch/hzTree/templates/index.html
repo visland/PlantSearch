@@ -14,15 +14,26 @@
             </div>
             <br>
             <div class="col-md-10 col-md-offset-1">
-                花色：
-                {% for checkbox in form.bloom_color_condition %}
-                    {{ checkbox }}
-                {% endfor %}
+                <div>花色：
+                    {% for checkbox in form.bloom_color_condition %}
+                        {{ checkbox }}
+                    {% endfor %}
+                </div>
+                <div>
+                    花期包含：
+                    {{ form.bloom_date_condition }}
+                </div>
                 <br>
-                果色：
-                {% for checkbox in form.fruit_color_condition %}
-                    {{ checkbox }}
-                {% endfor %}
+                <div>
+                    果色：
+                    {% for checkbox in form.fruit_color_condition %}
+                        {{ checkbox }}
+                    {% endfor %}
+                </div>
+                <div>
+                    果期包含：
+                    {{ form.fruit_date_condition }}
+                </div>
                 <div class="input-group col-md-10 col-md-offset-1">
                     <br>
                     {{ form.queryContent }}
@@ -77,9 +88,17 @@
                             <td class="text-center">{{ user.sname }}</td>
                             <td class="text-center">{{ user.biename }}</td>
                             <td class="text-center">{{ user.morphology }}</td>
-                            <td class="text-center">{{ user.bloom_date }}</td>
+                            <td class="text-center">
+                                {% for month in user.bloom_date.all %}
+                                    {{ month }}
+                                {% endfor %}
+                            </td>
                             <td class="text-center">{{ user.bloom_color }}</td>
-                            <td class="text-center">{{ user.fruit_date }}</td>
+                            <td class="text-center">
+                                    {% for month in user.fruit_date.all %}
+                                        {{ month }}
+                                    {% endfor %}
+                                </td>
                             <td class="text-center">{{ user.fruit_color }}</td>
                             <td class="text-center">{{ user.leaf_color }}</td>
                             </tr>

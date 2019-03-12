@@ -8,10 +8,10 @@
             "sname":"",
             "biename":"",
             "morphology":"",
-            "bloom_date":"",
-            "bloom_color":"",
-            "fruit_date":"",
-            "fruit_color":"",
+            "bloom_date":[],
+            "bloom_color":"黄绿色",
+            "fruit_date":"4,5月",
+            "fruit_color":"紫黑色",
             "leaf_color":""
         }
     },
@@ -24,10 +24,10 @@
             "sname":"",
             "biename":"",
             "morphology":"",
-            "bloom_date":"",
-            "bloom_color":"",
+            "bloom_date":[],
+            "bloom_color":"花药黄绿色",
             "fruit_date":"",
-            "fruit_color":"",
+            "fruit_color":"橙黄色",
             "leaf_color":""
         }
     },
@@ -40,10 +40,10 @@
             "sname":"",
             "biename":"",
             "morphology":"",
-            "bloom_date":"",
-            "bloom_color":"淡黄色",
-            "fruit_date":"",
-            "fruit_color":"",
+            "bloom_date":[],
+            "bloom_color":"乳白、黄、橙红色等",
+            "fruit_date":"翌年3月",
+            "fruit_color":"紫黑色",
             "leaf_color":""
         }
     }
