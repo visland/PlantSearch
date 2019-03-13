@@ -20,8 +20,10 @@ def index(request):
             keywords = form.cleaned_data['queryContent']
             bloom_color_checked = form.cleaned_data['bloom_color_condition']
             fruit_color_checked = form.cleaned_data['fruit_color_condition']
+            leaf_color_checked = form.cleaned_data['leaf_color_condition']
             bloom_date_condition = form.cleaned_data['bloom_date_condition']
             fruit_date_condition = form.cleaned_data['fruit_date_condition']
+            tree_type_condition = form.cleaned_data['tree_type_condition']
 
             user_list = Tree.objects
             
@@ -32,6 +34,8 @@ def index(request):
                 user_list = user_list.filter(bloom_date__name__contains=bloom_date_condition)
             if fruit_date_condition != "任意":
                 user_list = user_list.filter(fruit_date__name__contains=fruit_date_condition)
+            if tree_type_condition != "任意":
+                user_list = user_list.filter(tree_type=tree_type_condition)
 
             # 高级查询结果
             b = Q()
@@ -40,7 +44,10 @@ def index(request):
             f = Q()
             for elem in fruit_color_checked:
                 f = f | Q(fruit_color__icontains=elem)
-            user_list = user_list.filter(b & f)
+            l = Q()
+            for elem in leaf_color_checked:
+                l = l | Q(leaf_color__contains=elem)
+            user_list = user_list.filter(b & f & l)
 
             countNum = 0
             countNum = user_list.count()

@@ -6,6 +6,10 @@ class Months(models.Model):
     def __str__(self):        
         return self.name
         
+TREE_TYPE_CHOICES = (
+    ('常绿乔木','常绿乔木'),
+    ('落叶乔木','落叶乔木'),
+)
 
 class Tree(models.Model):
     # 基本信息
@@ -14,6 +18,8 @@ class Tree(models.Model):
     sname = models.CharField(max_length=64, default=" ")
     ldname = models.CharField(max_length=64, default=" ")
     biename = models.CharField(max_length=64, default=" ")
+    #类型信息
+    tree_type = models.CharField(max_length=64, choices=TREE_TYPE_CHOICES, default="")
     # 观赏特征
     morphology = models.CharField(max_length=300, default=" ")
     bloom_date = models.ManyToManyField(Months, blank=True,related_name="bloom_date")
@@ -21,6 +27,10 @@ class Tree(models.Model):
     fruit_date = models.ManyToManyField(Months, blank=True,related_name="fruit_date")
     fruit_color = models.CharField(max_length=64, default=" ")
     leaf_color = models.CharField(max_length=64, default=" ")
+    leaf_color_spring = models.CharField(max_length=64, default=" ")
+    leaf_color_summer = models.CharField(max_length=64, default=" ")
+    leaf_color_autumn = models.CharField(max_length=64, default=" ")
+    leaf_color_winter = models.CharField(max_length=64, default=" ")
 
     def __str__(self):        
         return self.zname
