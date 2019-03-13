@@ -49,12 +49,15 @@ TREE_TYPE_CHOICES = (
 class QueryUserForm(forms.Form):
     queryContent = forms.CharField(
         required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control',
-            'placeholder': '请输入需要查找的内容'}))
+        widget=forms.TextInput(
+            attrs={'class': 'form-control',
+                'placeholder': '请输入需要查找的内容'}))
 
     bloom_color_condition = forms.MultipleChoiceField(
         required=False,
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.CheckboxSelectMultiple(
+            attrs={
+                }),
         choices=BLOOM_COLOR_CONDITION_CHOICES)
 
     fruit_color_condition = forms.MultipleChoiceField(
@@ -63,15 +66,24 @@ class QueryUserForm(forms.Form):
         choices=FRUIT_COLOR_CONDITION_CHOICES)
 
     tree_type_condition = forms.ChoiceField(
-        widget=forms.Select,
+        widget=forms.Select(
+            attrs={'class': 'btn btn-outline-secondary dropdown-toggle btn-sm',
+                'type':"button",
+                "data-toggle":"dropdown"}),
         choices=TREE_TYPE_CHOICES)
 
     bloom_date_condition = forms.ChoiceField(
-        widget=forms.Select,
+        widget=forms.Select(
+            attrs={'class': 'btn btn-outline-secondary dropdown-toggle btn-sm',
+                'type':"button",
+                "data-toggle":"dropdown"}),
         choices=MONTHS_CHOICES)
     
     fruit_date_condition = forms.ChoiceField(
-        widget=forms.Select,
+        widget=forms.Select(
+            attrs={'class': 'btn btn-outline-secondary dropdown-toggle btn-sm',
+                'type':"button",
+                "data-toggle":"dropdown"}),
         choices=MONTHS_CHOICES)
 
     leaf_color_condition = forms.MultipleChoiceField(

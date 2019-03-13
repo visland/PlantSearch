@@ -1,150 +1,167 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    </head>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+</head>
+
 <body>
-
     <div id="page-header">
-        <h1 class="text-center"> 植物查询系统 </h1>
+        <h1 class="text-center">植物查询系统</h1>
     </div>
-
-    <div class="row">
+    <br>
     <form action="" method="GET" class="form-horizontal" role="form">
-        <div id="checkbox" class="text-center">
-            <label class="checkbox-inline text-success">在输入框中输入想查询内容或使用高级搜索功能</label>
-        </div>
-        <br>
-        <div class="col-12 ">
-            <div>花色：
-                {% for checkbox in form.bloom_color_condition %}
-                    {{ checkbox }}
-                {% endfor %}
-            </div>
-            <div>花期包含：
-                {{ form.bloom_date_condition }}
-            </div>
-            <br>
-            <div>果色：
-                {% for checkbox in form.fruit_color_condition %}
-                    {{ checkbox }}
-                {% endfor %}
-            </div>
-            <div>果期包含：
-                {{ form.fruit_date_condition }}
-            </div>
-            <br>
-            <div>叶色：
-                {% for checkbox in form.leaf_color_condition %}
-                        {{ checkbox }}
-                {% endfor %}
-            </div>
-            <br>
-            <div>树木类型：
-                    {{ form.tree_type_condition }}
-            </div>
-            <div class="input-group col-12">
-                {{ form.queryContent }}
-                <div class="input-group-btn">
-                    <button type="submit" class="btn btn-primary" required>查找</button>
+        <div class="container col-md-7">
+            <div class="row">
+                <div class="col-md border">
+                    <div class="row ">
+                        <label class="col-form-label pt-0 "> 花色：</label>
+                        {% for checkbox in form.bloom_color_condition %}
+                        {{ checkbox }} &nbsp;&nbsp;
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <label class="col-form-label pt-0"> 花期：</label>
+                        <div class="dropdown">
+                            {{ form.bloom_date_condition }}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <label class="col-form-label pt-0 "> 果色：</label>
+                        {% for checkbox in form.fruit_color_condition %}
+                        {{ checkbox }} &nbsp;&nbsp;
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <label class="col-form-label pt-0"> 果期：</label>
+                        <div class="dropdown">
+                            {{ form.fruit_date_condition }}
+                        </div>
+                    </div>
                 </div>
+                <div class="col-md border">
+                    <div class="row">
+                        <label class="col-form-label col-sm-3 pt-0"> 叶色：</label>
+                        {% for checkbox in form.leaf_color_condition %}
+                        {{ checkbox }} &nbsp;&nbsp;
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <label class="col-form-label col-sm-4 pt-0"> 树木类型：</label>
+                        <div class="dropdown">
+                            {{ form.tree_type_condition }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="checkbox" class="text-center">
+                    <label class="checkbox-inline text-success">请在<b>&nbsp输入框&nbsp</b>中输入想查询内容或直接使用<b>&nbsp高级搜索&nbsp</b>功能</label>
+            </div>
+            <div class="row">
+                <div class="col-md-10">{{ form.queryContent }}</div>
+                <button type="submit" class="btn btn-primary col-md-2" required>查找植物</button>
             </div>
         </div>
     </form>
-    </div>
     <br>
 
     {% if countNum != -1 %}
-        {% if countNum == 0 %}
-            <div class="alert alert-warning alert-dismissible col-md-10 col-md-offset-1" role="alert">
-                <button type="button" class="close" data-dismiss="alert">
+    {% if countNum == 0 %}
+    <div class="container col-md-7">
+        <div class="alert alert-warning alert-dismissible col-md-12" role="alert">
+            <button type="button" class="close" data-dismiss="alert">
                 <span aria-hidden="true">&times;</span>
-                <span class="sr-only">Close</span></button>
-                找不到相关的结果。请更换其他<b>&nbsp关键词或类型&nbsp</b>试试。</div></div>
-        {% else %}
-            <div class="row">
-                <div class="alert alert-success alert-dismissible col-md-10 col-md-offset-1 fade show" role="alert">
-                    {% comment %}
-                    <button type="button" class="close" data-dismiss="alert">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">Close</span>
-                    </button>
-                    {% endcomment %}
-                    找到相关结果 {{ countNum }} 个。用时 {{ time }} 秒。
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="table-responsive col-md-12">
-                    <table class="table table-striped table-hover">
-                    <tr>
-                    <th class="text-center">中文名</th>
-                    <th class="text-center">拉丁名</th>
-                    <th class="text-center">科名</th>
-                    <th class="text-center">属名</th>
-                    <th class="text-center">别名</th>
-                    <th class="text-center">形态</th>
-                    <th class="text-center">类型</th>
-                    <th class="text-center">花期</th>
-                    <th class="text-center">花色</th>
-                    <th class="text-center">果期</th>
-                    <th class="text-center">果色</th>
-                    <th class="text-center">叶色</th>
-                    </tr>
+                <span class="sr-only">Close</span>
+            </button>
+            找不到相关的结果。请更换其他<b>&nbsp关键词或类型&nbsp</b>试试。
+        </div>
+    </div>
+    {% else %}
+    <div class="container col-md-7">
+        <div class="alert alert-success alert-dismissible col-md-12 col-md-offset-1 fade show" role="alert">
+            找到相关结果 {{ countNum }} 个。用时 {{ time }} 秒。
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    <div class="table-responsive col-md-12">
+        <table class="table table-striped table-hover">
+            <tr>
+                <th class="text-center">中文名</th>
+                <th class="text-center">拉丁名</th>
+                <th class="text-center">科名</th>
+                <th class="text-center">属名</th>
+                <th class="text-center">别名</th>
+                <th class="text-center">形态</th>
+                <th class="text-center">类型</th>
+                <th class="text-center">花期</th>
+                <th class="text-center">花色</th>
+                <th class="text-center">果期</th>
+                <th class="text-center">果色</th>
+                <th class="text-center">叶色</th>
+            </tr>
 
-                    {% for user in users %}
-                        <tr>
-                        <img class="img-thumbnail" height="200" width="200" src="/static/{{user.zname}}.jpg">
-                        <td class="text-center">{{ user.zname }}</td>
-                        <td class="text-center">{{ user.ldname }}</td>
-                        <td class="text-center">{{ user.kname }}</td>
-                        <td class="text-center">{{ user.sname }}</td>
-                        <td class="text-center">{{ user.biename }}</td>
-                        <td class="text-center">{{ user.morphology }}</td>
-                        <td class="text-center">{{ user.tree_type }}</td>
-                        <td class="text-center">
-                            {% for month in user.bloom_date.all %}
-                                {{ month }}
-                            {% endfor %}
-                        </td>
-                        <td class="text-center">{{ user.bloom_color }}</td>
-                        <td class="text-center">
-                            {% for month in user.fruit_date.all %}
-                                {{ month }}
-                            {% endfor %}
-                            </td>
-                        <td class="text-center">{{ user.fruit_color }}</td>
-                        <td class="text-center">{{ user.leaf_color }}</td>
-                        </tr>
+            {% for user in users %}
+            <tr>
+                <img class="img-thumbnail" height="200" width="200" src="/static/{{user.zname}}.jpg">
+                <td class="text-center">{{ user.zname }}</td>
+                <td class="text-center">{{ user.ldname }}</td>
+                <td class="text-center">{{ user.kname }}</td>
+                <td class="text-center">{{ user.sname }}</td>
+                <td class="text-center">{{ user.biename }}</td>
+                <td class="text-center">{{ user.morphology }}</td>
+                <td class="text-center">{{ user.tree_type }}</td>
+                <td class="text-center">
+                    {% for month in user.bloom_date.all %}
+                    {{ month }}
                     {% endfor %}
-                    </table>
-                </div>
-            </div>
+                </td>
+                <td class="text-center">{{ user.bloom_color }}</td>
+                <td class="text-center">
+                    {% for month in user.fruit_date.all %}
+                    {{ month }}
+                    {% endfor %}
+                </td>
+                <td class="text-center">{{ user.fruit_color }}</td>
+                <td class="text-center">{{ user.leaf_color }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 
-            <div id="pages" class="text-center" >
-                <nav>
-                    <ul class="pagination">
-                        <li class="step-links">
-                            {% if users.has_previous %}
-                                <a class='active' href="?condition={{ condition }}&queryContent={{ keywords }}&page={{ users.previous_page_number }}">上一页</a>
-                            {% endif %}
+    <div id="pages" class="text-center">
+        <nav>
+            <ul class="pagination">
+                <li class="step-links">
+                    {% if users.has_previous %}
+                    <a class='active' href="?condition={{ condition }}&queryContent={{ keywords }}&page={{ users.previous_page_number }}">上一页</a>
+                    {% endif %}
 
-                            <span class="current">
-                                Page {{ users.number }} of {{ users.paginator.num_pages }}
-                            </span>
+                    <span class="current">
+                        Page {{ users.number }} of {{ users.paginator.num_pages }}
+                    </span>
 
-                            {% if users.has_next %}
-                                <a class='active' href="?condition={{ condition }}&queryContent={{ keywords }}&page={{ users.next_page_number }}">下一页</a>
-                            {% endif %}
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        {% endif %}
+                    {% if users.has_next %}
+                    <a class='active' href="?condition={{ condition }}&queryContent={{ keywords }}&page={{ users.next_page_number }}">下一页</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </div>
     {% endif %}
-
+    {% endif %}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
