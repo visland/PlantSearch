@@ -22,15 +22,27 @@ class Tree(models.Model):
     tree_type = models.CharField(max_length=64, choices=TREE_TYPE_CHOICES, default="")
     # 观赏特征
     morphology = models.CharField(max_length=300, default=" ")
+
     bloom_date = models.ManyToManyField(Months, blank=True,related_name="bloom_date")
     bloom_color = models.CharField(max_length=64, default=" ")
+    bloom_color_spring = models.CharField(max_length=64, default="无")
+    bloom_color_summer = models.CharField(max_length=64, default="无")
+    bloom_color_autumn = models.CharField(max_length=64, default="无")
+    bloom_color_winter = models.CharField(max_length=64, default="无")
+
     fruit_date = models.ManyToManyField(Months, blank=True,related_name="fruit_date")
+
     fruit_color = models.CharField(max_length=64, default=" ")
+    fruit_color_spring = models.CharField(max_length=64, default="无")
+    fruit_color_summer = models.CharField(max_length=64, default="无")
+    fruit_color_autumn = models.CharField(max_length=64, default="无")
+    fruit_color_winter = models.CharField(max_length=64, default="无")
+
     leaf_color = models.CharField(max_length=64, default=" ")
-    leaf_color_spring = models.CharField(max_length=64, default=" ")
-    leaf_color_summer = models.CharField(max_length=64, default=" ")
-    leaf_color_autumn = models.CharField(max_length=64, default=" ")
-    leaf_color_winter = models.CharField(max_length=64, default=" ")
+    leaf_color_spring = models.CharField(max_length=64, default="无")
+    leaf_color_summer = models.CharField(max_length=64, default="无")
+    leaf_color_autumn = models.CharField(max_length=64, default="无")
+    leaf_color_winter = models.CharField(max_length=64, default="无")
 
     def __str__(self):        
         return self.zname
