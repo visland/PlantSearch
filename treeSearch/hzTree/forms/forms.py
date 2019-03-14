@@ -50,8 +50,8 @@ class QueryUserForm(forms.Form):
     queryContent = forms.CharField(
         required=False,
         widget=forms.TextInput(
-            attrs={'class': 'form-control',
-                'placeholder': '请输入需要查找的内容'}))
+            attrs={
+                }))
 
     bloom_color_condition = forms.MultipleChoiceField(
         required=False,
@@ -66,10 +66,7 @@ class QueryUserForm(forms.Form):
         choices=FRUIT_COLOR_CONDITION_CHOICES)
 
     tree_type_condition = forms.ChoiceField(
-        widget=forms.Select(
-            attrs={'class': 'btn btn-outline-secondary dropdown-toggle btn-sm',
-                'type':"button",
-                "data-toggle":"dropdown"}),
+        widget=forms.Select(),
         choices=TREE_TYPE_CHOICES)
 
     bloom_date_condition = forms.ChoiceField(
@@ -88,6 +85,9 @@ class QueryUserForm(forms.Form):
 
     leaf_color_condition = forms.MultipleChoiceField(
         required=False,
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.CheckboxSelectMultiple(
+            attrs={"type":"checkbox",
+            "autocomplete":"off"}
+        ),
         choices=LEAF_COLOR_CONDITION_CHOICES)
     
