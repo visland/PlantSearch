@@ -13,13 +13,15 @@ TREE_TYPE_CHOICES = (
 
 class Tree(models.Model):
     # 基本信息
-    zname = models.CharField(max_length=64, default=" ")
-    kname = models.CharField(max_length=64, default=" ")
-    sname = models.CharField(max_length=64, default=" ")
-    ldname = models.CharField(max_length=64, default=" ")
-    biename = models.CharField(max_length=64, default=" ")
+    species_name = models.CharField(max_length=16, default=" ")
+    family_name = models.CharField(max_length=16, default=" ")
+    genus_name = models.CharField(max_length=16, default=" ")
+    latin_name = models.CharField(max_length=64, default=" ")
+    alternative_name = models.CharField(max_length=64, default=" ")
     #类型信息
-    tree_type = models.CharField(max_length=64, choices=TREE_TYPE_CHOICES, default="")
+    tree_type = models.CharField(max_length=16, choices=TREE_TYPE_CHOICES, default="")
+    tree_value = models.CharField(max_length=64, default=" ")
+    tree_shape = models.CharField(max_length=64, default=" ")
     # 观赏特征
     morphology = models.CharField(max_length=300, default=" ")
 
@@ -31,7 +33,6 @@ class Tree(models.Model):
     bloom_color_winter = models.CharField(max_length=64, default="无")
 
     fruit_date = models.ManyToManyField(Months, blank=True,related_name="fruit_date")
-
     fruit_color = models.CharField(max_length=64, default=" ")
     fruit_color_spring = models.CharField(max_length=64, default="无")
     fruit_color_summer = models.CharField(max_length=64, default="无")
@@ -43,9 +44,15 @@ class Tree(models.Model):
     leaf_color_summer = models.CharField(max_length=64, default="无")
     leaf_color_autumn = models.CharField(max_length=64, default="无")
     leaf_color_winter = models.CharField(max_length=64, default="无")
+    # 生态习性
+    geo_distribution = models.CharField(max_length=300, default=" ")
+    propensity = models.CharField(max_length=300, default=" ")
+    soil = models.CharField(max_length=300, default=" ")
+    pollution_tolerance = models.CharField(max_length=300, default=" ")
+
 
     def __str__(self):        
-        return self.zname
+        return self.species_name
     def bloom_month_list(self):
         return ','.join([i.name for i in self.bloom_date.all()])
     def fruit_month_list(self):

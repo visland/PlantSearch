@@ -1,10 +1,20 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.shortcuts import get_object_or_404, render
+from django.http import Http404
+from django.urls import reverse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.db import connection
 from django.shortcuts import render
 from django.db.models import Q
+from django.views import generic
 
 from .forms.forms import QueryUserForm
 from .models import Tree, Months
+
+def detail(request, species_name):
+    template_name = 'detail.html'
+    tree = get_object_or_404(Tree, species_name=species_name)
+    return render(request, template_name, {'tree': tree})
 
 def index(request):
     templateView = 'index.html'
@@ -24,19 +34,30 @@ def index(request):
             bloom_date_condition = form.cleaned_data['bloom_date_condition']
             fruit_date_condition = form.cleaned_data['fruit_date_condition']
             tree_type_condition = form.cleaned_data['tree_type_condition']
+            tree_value_condition = form.cleaned_data['tree_value_condition']
+            tree_shape_condition = form.cleaned_data['tree_shape_condition']
+            soil_condition = form.cleaned_data['soil_condition']
+            pollution_condition = form.cleaned_data['pollution_condition']
 
             user_list = Tree.objects
             
             # 文本输入框查询结果
             if keywords:
-                user_list = user_list.filter(Q(kname__icontains=keywords)|Q(sname__icontains=keywords)|Q(zname__icontains=keywords)|Q(ldname__icontains=keywords)|Q(biename__icontains=keywords)|Q(morphology__icontains=keywords))
+                user_list = user_list.filter(Q(species_name__icontains=keywords)|Q(family_name__icontains=keywords)|Q(genus_name__icontains=keywords)|Q(latin_name__icontains=keywords)|Q(alternative_name__icontains=keywords)|Q(morphology__icontains=keywords))
             if bloom_date_condition != "任意":
                 user_list = user_list.filter(bloom_date__name__contains=bloom_date_condition)
             if fruit_date_condition != "任意":
                 user_list = user_list.filter(fruit_date__name__contains=fruit_date_condition)
             if tree_type_condition != "任意":
                 user_list = user_list.filter(tree_type=tree_type_condition)
-
+            if tree_value_condition != "任意":
+                user_list = user_list.filter(tree_value__contains=tree_value_condition)
+            if tree_shape_condition != "任意":
+                user_list = user_list.filter(tree_shape__contains=tree_shape_condition)
+            if soil_condition != "任意土质":
+                user_list = user_list.filter(soil__contains=soil_condition)
+            if pollution_condition != "环境较好":
+                user_list = user_list.filter(pollution_tolerance__contains=pollution_condition)
             # 高级查询结果
             b = Q()
             for elem in bloom_color_checked:

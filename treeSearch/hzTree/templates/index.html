@@ -18,10 +18,9 @@
 </head>
 
 <body>
-    <div id="page-header" style="background-color:DARKSEAGREEN; height:200px;">
-        <h1 class="text-center" style="padding-top: 10%; color: aliceblue; ">植物查询系统</h1>
+    <div id="page-header" style="background-color:DARKSEAGREEN; height:100px;">
+        <h1 class="text-center" style="padding-top: 3%; color: aliceblue; ">植物查询系统</h1>
     </div>
-    {% block content %}
     <br>
     <form action="" method="GET" class="form-horizontal" role="form">
         <div class="container col-md-7">
@@ -35,11 +34,8 @@
                     </div>
                     <div class="row">
                         <label class="col-form-label pt-0"> 花期：</label>
-                        <div class="dropdown">
-                            {{ form.bloom_date_condition }}
-                        </div>
+                        {% render_field form.bloom_date_condition class="btn-light"%}
                     </div>
-                    <br>
                     <div class="row">
                         <label class="col-form-label pt-0 "> 果色：</label>
                         {% for checkbox in form.fruit_color_condition %}
@@ -48,9 +44,7 @@
                     </div>
                     <div class="row">
                         <label class="col-form-label pt-0"> 果期：</label>
-                        <div class="dropdown">
-                            {{ form.fruit_date_condition }}
-                        </div>
+                        {% render_field form.fruit_date_condition class="btn-light"%}
                     </div>
                 </div>
                 <div class="col-md border">
@@ -62,7 +56,25 @@
                     </div>
                     <div class="row">
                         <label class="col-form-label col-sm-4 pt-0"> 树木类型：</label>
-                        {% render_field form.tree_type_condition class="btn-outline-secondary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"%}
+                        {% render_field form.tree_type_condition class="btn-light"%}
+                    </div>
+                    <div class="row">
+                        <label class="col-form-label col-sm-4 pt-0"> 观赏类型：</label>
+                        {% render_field form.tree_value_condition class="btn-light"%}
+                    </div>
+                    <div class="row">
+                        <label class="col-form-label col-sm-4 pt-0"> 树形：</label>
+                        {% for radio in form.tree_shape_condition %}
+                        {{ radio }} &nbsp;&nbsp;
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <label class="col-form-label col-sm-4 pt-0"> 场地土质：</label>
+                        {% render_field form.soil_condition class="btn-light"%}
+                    </div>
+                    <div class="row">
+                        <label class="col-form-label col-sm-4 pt-0"> 场地污染：</label>
+                        {% render_field form.pollution_condition class="btn-light"%}
                     </div>
                 </div>
             </div>
@@ -102,24 +114,27 @@
     {% for user in users%}
     <div class="container alert col-md-8" style="background-color:DARKSEAGREEN;">
         <div class="row">
-            <span class="h4" style="padding-left: 1ex;">{{ user.zname }}</span>
-            <span style="font-size:2.2ex; padding-top: 0.8ex; padding-left: 1ex; font-style: italic; font-family:'Times New Roman', Times, serif">{{ user.ldname }}</span>
+            <span class="h4" style="padding-left: 1ex;"><a href = "{% url 'detail' user.species_name %}">{{ user.species_name }}</a></span>
+            <span style="font-size:2.2ex; padding-top: 0.8ex; padding-left: 1ex; font-style: italic; font-family:'Times New Roman', Times, serif">{{ user.latin_name }}</span>
         </div>
     </div>
     <div class="container col-md-8 rounded-lg" style="margin-top: -1%; border:2px solid DARKSEAGREEN;">
         <div class="row">
             <div class="col-md-3">
-                <img class="img-thumbnail rounded" src="/static/images/tree/{{user.zname}}.png">
+                <img class="img-thumbnail rounded" src="/static/images/tree/{{user.species_name}}.png">
             </div>
             <div class="col-md-4">
                 <legend class="col-form-info pt-0">
-                    <b>科属：</b>{{ user.kname }},&nbsp;{{ user.sname }}
+                    <b>科属：</b>{{ user.family_name }},&nbsp;{{ user.genus_name }}
                 </legend>
                 <legend class="col-form-info pt-0">
-                    <b>别名：&nbsp;</b>{{ user.biename }}
+                    <b>别名：&nbsp;</b>{{ user.alternative_name }}
                 </legend>
                 <legend class="col-form-info pt-0">
                     <b>树木类型：&nbsp;</b>{{ user.tree_type }}
+                </legend>
+                <legend class="col-form-info pt-0">
+                    <b>观赏类型：&nbsp;</b>{{ user.tree_value }}
                 </legend>
                 <legend class="col-form-info pt-0">
                     <b>叶色：</b>{{ user.leaf_color }}
@@ -261,29 +276,34 @@
         </div>
     </div>
     {% endfor%}
-
-    <div id="pages" class="text-center">
-        <nav>
-            <ul class="pagination">
-                <li class="step-links">
-                    {% if users.has_previous %}
-                    <a class='active' href="?condition={{ condition }}&queryContent={{ keywords }}&page={{ users.previous_page_number }}">上一页</a>
-                    {% endif %}
-
-                    <span class="current">
-                        Page {{ users.number }} of {{ users.paginator.num_pages }}
-                    </span>
-
-                    {% if users.has_next %}
-                    <a class='active' href="?condition={{ condition }}&queryContent={{ keywords }}&page={{ users.next_page_number }}">下一页</a>
-                    {% endif %}
-                </li>
-            </ul>
-        </nav>
-    </div>
+    <br>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if users.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?condition={{ condition }}&queryContent={{ keywords }}&page={{ users.previous_page_number }}">上一页</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="">上一页</a>
+            </li>
+            {% endif %}
+            <li class="page-item disabled">
+                <a class="page-link"> 第 {{ users.number }} 页，共 {{ users.paginator.num_pages }} 页 </a>
+            </li>
+            {% if users.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?condition={{ condition }}&queryContent={{ keywords }}&page={{ users.next_page_number }}">下一页</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="">下一页</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
     {% endif %}
     {% endif %}
-    {% endblock %}
 </body>
 
 </html>
