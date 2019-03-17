@@ -1,9 +1,8 @@
+{% include "base.html" %}
 {% load static %}
 {% load widget_tweaks %}
-
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,12 +15,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 </head>
-
 <body>
-    <div id="page-header" style="background-color:DARKSEAGREEN; height:100px;">
-        <h1 class="text-center" style="padding-top: 3%; color: aliceblue; ">植物查询系统</h1>
-    </div>
-    <br>
+    {% block header %}
+    {% endblock %}
     <form action="" method="GET" class="form-horizontal" role="form">
         <div class="container col-md-7">
             <div class="row">
@@ -113,10 +109,9 @@
     </div>
     {% for user in users%}
     <div class="container alert col-md-8" style="background-color:DARKSEAGREEN;">
-        <div class="row">
-            <span class="h4" style="padding-left: 1ex;"><a href = "{% url 'detail' user.species_name %}">{{ user.species_name }}</a></span>
+            <span class="h4" style="padding-left: 1ex;">{{ user.species_name }}</span>
             <span style="font-size:2.2ex; padding-top: 0.8ex; padding-left: 1ex; font-style: italic; font-family:'Times New Roman', Times, serif">{{ user.latin_name }}</span>
-        </div>
+        <a href = "{% url 'detail' user.species_name %}" style="margin-left:80%; color: azure">更多信息</a>
     </div>
     <div class="container col-md-8 rounded-lg" style="margin-top: -1%; border:2px solid DARKSEAGREEN;">
         <div class="row">
@@ -137,9 +132,6 @@
                     <b>观赏类型：&nbsp;</b>{{ user.tree_value }}
                 </legend>
                 <legend class="col-form-info pt-0">
-                    <b>叶色：</b>{{ user.leaf_color }}
-                </legend>
-                <legend class="col-form-info pt-0">
                     <b>形态特征：&nbsp;</b>
                     {{ user.morphology }}
                 </legend>
@@ -150,6 +142,7 @@
                 }
             </style>
             <div class="col-md-5">
+                {% comment %}
                 <div class = "row">
                     <legend class="col col-form-info pt-0">
                         <b>果色：</b>{{ user.fruit_color }}
@@ -220,6 +213,7 @@
                         {% endfor %}
                     </legend>
                 </div>
+                {% endcomment %}
                 <style>
                     .leaf_season {
                         width: 50px;
@@ -244,7 +238,7 @@
                 </style>
                 <div class="container col-md-11">
                     <div class="rounded" style="background-color:rgb(216, 238, 216);">
-                        <h6 class="text-center" style="line-height: 4ex;">季相色彩示意图</h6>
+                        <h6 class="text-center" style="margin-top:1%; line-height: 4ex;">季相色彩示意图</h6>
                     </div>
                     <div class="container row rounded" style="margin-left: 1%; margin-top:-2.5%;">
                         <div class="col text-center rounded" style="background-color:SEASHELL;">春</div>
@@ -270,7 +264,7 @@
                         <img class="bloom_season" src="/static/images/bloom/{{user.bloom_color_autumn}}.png">
                         <img class="bloom_season" src="/static/images/bloom/{{user.bloom_color_winter}}.png">
                     </div>
-                    <span class="text-center" style="font-size: 1.4ex; line-height: 1ex; margin-left: 10%;">*仅表现色相变化，图案大小和形状仅为示意</span>
+                    <span class="text-center" style="font-size: 1.4ex; line-height: 1ex; margin-left: 10%;">*仅示意色彩变化，真实花果叶图片请访问<a href = "{% url 'detail' user.species_name %}" style="color:rgb(119, 151, 119); border-bottom: 1px solid">更多信息</a></span>
                 </div>
             </div>
         </div>
@@ -305,5 +299,4 @@
     {% endif %}
     {% endif %}
 </body>
-
 </html>

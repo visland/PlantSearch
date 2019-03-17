@@ -1,2 +1,152 @@
-<h1>{{ tree }}</h1>
-<a class="page-link" href="{% url 'index'%}">返回</a>
+{% include "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</head>
+<body>
+  <style>
+      .col-form-info{
+          font-size: 16px;
+      }
+  </style>
+  {% block header %}
+  {% endblock %}
+  <div class="container alert col-md-8" style="background-color:DARKSEAGREEN;">
+      <span class="h4" style="padding-left: 1ex;">{{ tree.species_name }}</span>
+  </div>
+  <div class="container col-md-8 rounded-lg" style="margin-top: -1%; border:2px solid DARKSEAGREEN;">
+    <div class="row">
+      <div class="col-md-8" style="margin-left:1%;">
+        <legend style="padding-top:2%; border-bottom:2px solid rgb(216, 238, 216);">基本信息</legend>
+        <legend class="col-form-info pt-0">
+          <b>拉丁名：</b>
+          <span style="font-style: italic; font-family:'Times New Roman', Times, serif">{{ tree.latin_name }}</span>
+        </legend>
+        <legend class="col-form-info pt-0">
+          <b>科名：</b>{{ tree.family_name }}&nbsp;&nbsp;&nbsp;&nbsp;<b>属名：</b>{{ tree.genus_name }}
+        </legend>
+        <legend class="col-form-info pt-0">
+          <b>别名：</b>{{ tree.alternative_name }}
+        </legend>
+        <legend class="col-form-info pt-0">
+          <b>树木类型：</b>{{ tree.tree_type }}
+        </legend>
+        <legend style="padding-top:2%; border-bottom:2px solid rgb(216, 238, 216);">形态及观赏特征</legend>
+        <legend class="col-form-info pt-0">
+          <b>观赏特征：</b>{{ tree.tree_value }}
+        </legend>
+        <legend class="col-form-info pt-0">
+          <b>形态：</b>{{ tree.morphology }}
+        </legend>
+        <legend class="col-form-info pt-0">
+          <b>树形：</b>{{ tree.tree_shape}}
+        </legend>
+        <legend class="col-form-info pt-0">
+          <b>叶色：</b>{{ tree.leaf_color}}
+        </legend>
+        <div class = "row">
+          <legend class="col col-form-info pt-0">
+            <b>果色：</b>{{ tree.fruit_color }}
+          </legend>
+          <legend class="col col-form-info pt-0">
+            <b>果期：</b>
+            {% for month in tree.fruit_date.all %}
+                {% if month.name == "Jan" %}
+                1月
+                {% elif month.name == "Feb" %}
+                2月
+                {% elif month.name == "Mar" %}
+                3月
+                {% elif month.name == "Apr" %}
+                4月
+                {% elif month.name == "May" %}
+                5月
+                {% elif month.name == "Jun" %}
+                6月
+                {% elif month.name == "Jul" %}
+                7月
+                {% elif month.name == "Aug" %}
+                8月
+                {% elif month.name == "Sep" %}
+                9月
+                {% elif month.name == "Oct" %}
+                10月
+                {% elif month.name == "Nov" %}
+                11月
+                {% elif month.name == "Dec" %}
+                12月
+                {% endif %}
+            {% endfor %}
+          </legend>
+        </div>
+        <div class="row">
+          <legend class="col col-form-info pt-0">
+            <b>花色：</b>{{ tree.bloom_color }}
+          </legend>
+          <legend class="col col-form-info pt-0">
+            <b>花期：</b>
+            {% for month in tree.bloom_date.all %}
+                {% if month.name == "Jan" %}
+                1月
+                {% elif month.name == "Feb" %}
+                2月
+                {% elif month.name == "Mar" %}
+                3月
+                {% elif month.name == "Apr" %}
+                4月
+                {% elif month.name == "May" %}
+                5月
+                {% elif month.name == "Jun" %}
+                6月
+                {% elif month.name == "Jul" %}
+                7月
+                {% elif month.name == "Aug" %}
+                8月
+                {% elif month.name == "Sep" %}
+                9月
+                {% elif month.name == "Oct" %}
+                10月
+                {% elif month.name == "Nov" %}
+                11月
+                {% elif month.name == "Dec" %}
+                12月
+                {% endif %}
+            {% endfor %}
+          </legend>
+        </div>
+        <legend style="padding-top:2%; border-bottom:2px solid rgb(216, 238, 216);">分布及生长习性</legend>
+        <legend class="col-form-info pt-0">
+          <b>地理分布：</b>{{ tree.geo_distribution }}
+        </legend>
+        <legend class="col-form-info pt-0">
+          <b>生态习性：</b>{{ tree.propensity }}
+        </legend>
+        <legend class="col-form-info pt-0">
+          <b>土壤要求：</b>{{ tree.soil }}
+        </legend>
+        <legend class="col-form-info pt-0">
+          <b>污染耐受程度：</b>{{ tree.pollution_tollerance }}
+        </legend>
+      </div>
+      <div class="col text-center">
+          <legend class="text-left" style="padding-top:4%; border-bottom:2px solid rgb(216, 238, 216);">植物图集</legend>
+          <img class="img-thumbnail rounded" width="200px" height="200px" src="/static/images/tree/{{tree.species_name}}1.png">
+          <img class="img-thumbnail rounded" width="200px" height="200px" src="/static/images/tree/{{tree.species_name}}2.png">
+          <img class="img-thumbnail rounded" width="200px" height="200px" src="/static/images/tree/{{tree.species_name}}3.png">
+      </div>
+    </div>
+  </div>
+</body>
+</html>
