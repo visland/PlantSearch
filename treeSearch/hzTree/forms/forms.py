@@ -26,24 +26,31 @@ LEAF_COLOR_CONDITION_CHOICES = (
 
 MONTHS_CHOICES = (
     ('任意', '任意'),
-    ('Jan', '1月'),
-    ('Feb', '2月'),
-    ('Mar', '3月'),
-    ('Apr', '4月'),
-    ('May', '5月'),
-    ('Jun', '6月'),
-    ('Jul', '7月'),
-    ('Aug', '8月'),
-    ('Sep', '9月'),
-    ('Oct', '10月'),
-    ('Nov', '11月'),
-    ('Dec', '12月'),
+    ('1月', '1月'),
+    ('2月', '2月'),
+    ('3月', '3月'),
+    ('4月', '4月'),
+    ('5月', '5月'),
+    ('6月', '6月'),
+    ('7月', '7月'),
+    ('8月', '8月'),
+    ('9月', '9月'),
+    ('10月', '10月'),
+    ('11月', '11月'),
+    ('12月', '12月'),
 )
 
 TREE_TYPE_CHOICES = (
     ('任意', '任意'),
-    ('常绿乔木','常绿乔木'),
-    ('落叶乔木','落叶乔木'),
+    ('乔木','乔木'),
+    ('小乔木','小乔木'),
+    ('灌木','灌木'),
+)
+
+LEAF_TYPE_CHOICES = (
+    ('任意', '任意'),
+    ('落叶', '落叶'),
+    ('常绿', '常绿'),
 )
 
 VALUE_CHOICES = (
@@ -52,7 +59,7 @@ VALUE_CHOICES = (
     ('观叶', '观叶'),   
     ('观果', '观果'),
     ('观树形', '观树形'),
-    ('观枝', '观枝'),
+    ('观树干', '观树干'),
 )
 
 SHAPE_CHOICES = (
@@ -83,6 +90,11 @@ class QueryUserForm(forms.Form):
     tree_type_condition = forms.ChoiceField(
         widget=forms.Select,
         choices=TREE_TYPE_CHOICES)
+    
+    leaf_type_condition = forms.ChoiceField(
+        choices=LEAF_TYPE_CHOICES,
+        widget=forms.RadioSelect,
+        initial='任意')
 
     tree_value_condition = forms.ChoiceField(
         widget=forms.Select,
@@ -123,4 +135,3 @@ class QueryUserForm(forms.Form):
         required=False,
         widget=forms.CheckboxSelectMultiple,
         choices=LEAF_COLOR_CONDITION_CHOICES)
-    

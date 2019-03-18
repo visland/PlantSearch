@@ -63,31 +63,7 @@
           <legend class="col col-form-info pt-0">
             <b>果期：</b>
             {% for month in tree.fruit_date.all %}
-                {% if month.name == "Jan" %}
-                1月
-                {% elif month.name == "Feb" %}
-                2月
-                {% elif month.name == "Mar" %}
-                3月
-                {% elif month.name == "Apr" %}
-                4月
-                {% elif month.name == "May" %}
-                5月
-                {% elif month.name == "Jun" %}
-                6月
-                {% elif month.name == "Jul" %}
-                7月
-                {% elif month.name == "Aug" %}
-                8月
-                {% elif month.name == "Sep" %}
-                9月
-                {% elif month.name == "Oct" %}
-                10月
-                {% elif month.name == "Nov" %}
-                11月
-                {% elif month.name == "Dec" %}
-                12月
-                {% endif %}
+            {{ month }}
             {% endfor %}
           </legend>
         </div>
@@ -98,31 +74,7 @@
           <legend class="col col-form-info pt-0">
             <b>花期：</b>
             {% for month in tree.bloom_date.all %}
-                {% if month.name == "Jan" %}
-                1月
-                {% elif month.name == "Feb" %}
-                2月
-                {% elif month.name == "Mar" %}
-                3月
-                {% elif month.name == "Apr" %}
-                4月
-                {% elif month.name == "May" %}
-                5月
-                {% elif month.name == "Jun" %}
-                6月
-                {% elif month.name == "Jul" %}
-                7月
-                {% elif month.name == "Aug" %}
-                8月
-                {% elif month.name == "Sep" %}
-                9月
-                {% elif month.name == "Oct" %}
-                10月
-                {% elif month.name == "Nov" %}
-                11月
-                {% elif month.name == "Dec" %}
-                12月
-                {% endif %}
+                {{ month }}
             {% endfor %}
           </legend>
         </div>

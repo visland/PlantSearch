@@ -5,12 +5,7 @@ class Months(models.Model):
     
     def __str__(self):        
         return self.name
-        
-TREE_TYPE_CHOICES = (
-    ('常绿乔木','常绿乔木'),
-    ('落叶乔木','落叶乔木'),
-)
-
+    
 class Tree(models.Model):
     # 基本信息
     species_name = models.CharField(max_length=16, default=" ")
@@ -19,7 +14,7 @@ class Tree(models.Model):
     latin_name = models.CharField(max_length=64, default=" ")
     alternative_name = models.CharField(max_length=64, default=" ")
     #类型信息
-    tree_type = models.CharField(max_length=16, choices=TREE_TYPE_CHOICES, default="")
+    tree_type = models.CharField(max_length=16, default=" ")
     tree_value = models.CharField(max_length=64, default=" ")
     tree_shape = models.CharField(max_length=64, default=" ")
     # 观赏特征

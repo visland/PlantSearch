@@ -34,22 +34,39 @@ def index(request):
             bloom_date_condition = form.cleaned_data['bloom_date_condition']
             fruit_date_condition = form.cleaned_data['fruit_date_condition']
             tree_type_condition = form.cleaned_data['tree_type_condition']
+            leaf_type_condition = form.cleaned_data['leaf_type_condition']
             tree_value_condition = form.cleaned_data['tree_value_condition']
             tree_shape_condition = form.cleaned_data['tree_shape_condition']
             soil_condition = form.cleaned_data['soil_condition']
             pollution_condition = form.cleaned_data['pollution_condition']
-
+            
             user_list = Tree.objects
             
             # 文本输入框查询结果
             if keywords:
                 user_list = user_list.filter(Q(species_name__icontains=keywords)|Q(family_name__icontains=keywords)|Q(genus_name__icontains=keywords)|Q(latin_name__icontains=keywords)|Q(alternative_name__icontains=keywords)|Q(morphology__icontains=keywords))
+            
             if bloom_date_condition != "任意":
+                if bloom_date_condition == "1月":
+                    user_list = user_list.exclude(bloom_date__name__contains="11月").filter(bloom_date__name__contains=bloom_date_condition)
+                if bloom_date_condition == "2月":
+                    user_list = user_list.exclude(bloom_date__name__contains="12月").filter(bloom_date__name__contains=bloom_date_condition)
                 user_list = user_list.filter(bloom_date__name__contains=bloom_date_condition)
+            
             if fruit_date_condition != "任意":
+                if fruit_date_condition == "1月":
+                    user_list = user_list.exclude(fruit_date__name__contains="11月").filter(fruit_date__name__contains=bloom_date_condition)
+                if fruit_date_condition == "2月":
+                    user_list = user_list.exclude(fruit_date__name__contains="12月").filter(fruit_date__name__contains=bloom_date_condition)
                 user_list = user_list.filter(fruit_date__name__contains=fruit_date_condition)
+            
             if tree_type_condition != "任意":
-                user_list = user_list.filter(tree_type=tree_type_condition)
+                if tree_type_condition == "乔木":
+                    user_list = user_list.exclude(tree_type__contains="小乔木").filter(tree_type__contains=tree_type_condition)
+                user_list = user_list.filter(tree_type__contains=tree_type_condition)
+            
+            if leaf_type_condition != "任意":
+                user_list = user_list.filter(tree_type__contains=leaf_type_condition)
             if tree_value_condition != "任意":
                 user_list = user_list.filter(tree_value__contains=tree_value_condition)
             if tree_shape_condition != "任意":
@@ -58,6 +75,7 @@ def index(request):
                 user_list = user_list.filter(soil__contains=soil_condition)
             if pollution_condition != "环境较好":
                 user_list = user_list.filter(pollution_tolerance__contains=pollution_condition)
+
             # 高级查询结果
             b = Q()
             for elem in bloom_color_checked:

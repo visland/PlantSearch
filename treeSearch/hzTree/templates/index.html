@@ -55,6 +55,12 @@
                         {% render_field form.tree_type_condition class="btn-light"%}
                     </div>
                     <div class="row">
+                        <label class="col-form-label col-sm-4 pt-0"> 落叶类型：</label>
+                        {% for radio in form.leaf_type_condition  %}
+                        {{ radio }}&nbsp;&nbsp;
+                        {% endfor %}
+                    </div>
+                    <div class="row">
                         <label class="col-form-label col-sm-4 pt-0"> 观赏类型：</label>
                         {% render_field form.tree_value_condition class="btn-light"%}
                     </div>
@@ -142,78 +148,6 @@
                 }
             </style>
             <div class="col-md-5">
-                {% comment %}
-                <div class = "row">
-                    <legend class="col col-form-info pt-0">
-                        <b>果色：</b>{{ user.fruit_color }}
-                    </legend>
-                    <legend class="col col-form-info pt-0">
-                        <b>果期：</b>
-                        {% for month in user.fruit_date.all %}
-                            {% if month.name == "Jan" %}
-                            1月
-                            {% elif month.name == "Feb" %}
-                            2月
-                            {% elif month.name == "Mar" %}
-                            3月
-                            {% elif month.name == "Apr" %}
-                            4月
-                            {% elif month.name == "May" %}
-                            5月
-                            {% elif month.name == "Jun" %}
-                            6月
-                            {% elif month.name == "Jul" %}
-                            7月
-                            {% elif month.name == "Aug" %}
-                            8月
-                            {% elif month.name == "Sep" %}
-                            9月
-                            {% elif month.name == "Oct" %}
-                            10月
-                            {% elif month.name == "Nov" %}
-                            11月
-                            {% elif month.name == "Dec" %}
-                            12月
-                            {% endif %}
-                        {% endfor %}
-                    </legend>
-                </div>
-                <div class = "row">
-                    <legend class="col col-form-info pt-0">
-                        <b>花色：</b>{{ user.bloom_color }}
-                    </legend>
-                    <legend class="col col-form-info pt-0">
-                        <b>花期：</b>
-                        {% for month in user.bloom_date.all %}
-                            {% if month.name == "Jan" %}
-                            1月
-                            {% elif month.name == "Feb" %}
-                            2月
-                            {% elif month.name == "Mar" %}
-                            3月
-                            {% elif month.name == "Apr" %}
-                            4月
-                            {% elif month.name == "May" %}
-                            5月
-                            {% elif month.name == "Jun" %}
-                            6月
-                            {% elif month.name == "Jul" %}
-                            7月
-                            {% elif month.name == "Aug" %}
-                            8月
-                            {% elif month.name == "Sep" %}
-                            9月
-                            {% elif month.name == "Oct" %}
-                            10月
-                            {% elif month.name == "Nov" %}
-                            11月
-                            {% elif month.name == "Dec" %}
-                            12月
-                            {% endif %}
-                        {% endfor %}
-                    </legend>
-                </div>
-                {% endcomment %}
                 <style>
                     .leaf_season {
                         width: 50px;
