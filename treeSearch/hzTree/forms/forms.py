@@ -81,6 +81,7 @@ POLLUTION_CHOICES = (
     ('环境较好','环境较好'),
     ('烟尘','烟尘大'),
     ('有害气体','气体污染'),
+    ('风','海风大'),
 )
 class QueryUserForm(forms.Form):
     queryContent = forms.CharField(

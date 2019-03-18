@@ -115,9 +115,8 @@
     </div>
     {% for user in users%}
     <div class="container alert col-md-8" style="background-color:DARKSEAGREEN;">
-            <span class="h4" style="padding-left: 1ex;">{{ user.species_name }}</span>
+            <span class="h4" style="padding-left: 1ex;"><a  href = "{% url 'detail' user.species_name %}" style="color: black; border-bottom: 1px solid;">{{ user.species_name }}</a></span>
             <span style="font-size:2.2ex; padding-top: 0.8ex; padding-left: 1ex; font-style: italic; font-family:'Times New Roman', Times, serif">{{ user.latin_name }}</span>
-        <a href = "{% url 'detail' user.species_name %}" style="margin-left:80%; color: azure">更多信息</a>
     </div>
     <div class="container col-md-8 rounded-lg" style="margin-top: -1%; border:2px solid DARKSEAGREEN;">
         <div class="row">
@@ -203,6 +202,7 @@
             </div>
         </div>
     </div>
+    <br>
     {% endfor%}
     <br>
     <nav aria-label="Page navigation example">
@@ -232,5 +232,6 @@
     </nav>
     {% endif %}
     {% endif %}
+    
 </body>
 </html>
