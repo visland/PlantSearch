@@ -41,33 +41,32 @@ MONTHS_CHOICES = (
 )
 
 TREE_TYPE_CHOICES = (
-    ('任意', '任意'),
     ('乔木','乔木'),
     ('小乔木','小乔木'),
     ('灌木','灌木'),
 )
 
 LEAF_TYPE_CHOICES = (
-    ('任意', '任意'),
+    ('常绿或落叶', '常绿或落叶'),
     ('落叶', '落叶'),
     ('常绿', '常绿'),
 )
 
 VALUE_CHOICES = (
-    ('任意', '任意'),
     ('观花', '观花'),
     ('观叶', '观叶'),   
     ('观果', '观果'),
     ('观树形', '观树形'),
-    ('观树干', '观树干'),
+    ('观树干', '观枝干'),
+    ('观树根', '观树根'),
 )
 
 SHAPE_CHOICES = (
-    ('任意', '任意'),
     ('卵', '卵形'),
     ('塔', '尖塔形'),
     ('锥', '圆锥形'),
     ('伞', '伞形'),
+    ('头','圆头形'),
 )
 
 SOIL_CHOICES = (
@@ -78,40 +77,41 @@ SOIL_CHOICES = (
 )
 
 POLLUTION_CHOICES = (
-    ('环境较好','环境较好'),
     ('烟尘','烟尘大'),
-    ('有害气体','气体污染'),
-    ('风','海风大'),
+    ('有害气体','气体污染大'),
+    ('风','风大'),
 )
 class QueryUserForm(forms.Form):
     queryContent = forms.CharField(
         required=False,
         widget=forms.TextInput)
 
-    tree_type_condition = forms.ChoiceField(
-        widget=forms.Select,
+    tree_type_condition = forms.MultipleChoiceField(
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
         choices=TREE_TYPE_CHOICES)
     
     leaf_type_condition = forms.ChoiceField(
         choices=LEAF_TYPE_CHOICES,
-        widget=forms.RadioSelect,
-        initial='任意')
+        widget=forms.Select)
 
-    tree_value_condition = forms.ChoiceField(
-        widget=forms.Select,
+    tree_value_condition = forms.MultipleChoiceField(
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
         choices=VALUE_CHOICES,)
 
-    tree_shape_condition = forms.ChoiceField(
+    tree_shape_condition = forms.MultipleChoiceField(
         required=False,
-        widget=forms.RadioSelect,
+        widget=forms.CheckboxSelectMultiple,
         choices=SHAPE_CHOICES)
     
     soil_condition = forms.ChoiceField(
         widget=forms.Select,
         choices=SOIL_CHOICES)
 
-    pollution_condition = forms.ChoiceField(
-        widget=forms.Select,
+    pollution_condition = forms.MultipleChoiceField(
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
         choices=POLLUTION_CHOICES)
 
     bloom_color_condition = forms.MultipleChoiceField(

@@ -1,4 +1,4 @@
-{% include "base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% load widget_tweaks %}
 <!DOCTYPE html>
@@ -16,13 +16,12 @@
         crossorigin="anonymous"></script>
 </head>
 <body>
+  {% block content %}
   <style>
       .col-form-info{
           font-size: 16px;
       }
   </style>
-  {% block header %}
-  {% endblock %}
   <div class="container alert col-md-8" style="background-color:DARKSEAGREEN;">
       <span class="h4" style="padding-left: 1ex;">{{ tree.species_name }}</span>
   </div>
@@ -100,5 +99,7 @@
       </div>
     </div>
   </div>
+  <br>
+  {% endblock %}
 </body>
 </html>

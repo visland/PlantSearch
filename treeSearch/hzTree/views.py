@@ -6,7 +6,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.db import connection
 from django.shortcuts import render
 from django.db.models import Q
-from django.views import generic
 
 from .forms.forms import QueryUserForm
 from .models import Tree, Months
@@ -14,7 +13,9 @@ from .models import Tree, Months
 def detail(request, species_name):
     template_name = 'detail.html'
     tree = get_object_or_404(Tree, species_name=species_name)
-    return render(request, template_name, {'tree': tree})
+    return render(request, template_name, {
+        'tree': tree,
+        })
 
 def index(request):
     templateView = 'index.html'
@@ -60,21 +61,15 @@ def index(request):
                     user_list = user_list.exclude(fruit_date__name__contains="12月").filter(fruit_date__name__contains=bloom_date_condition)
                 user_list = user_list.filter(fruit_date__name__contains=fruit_date_condition)
             
-            if tree_type_condition != "任意":
-                if tree_type_condition == "乔木":
-                    user_list = user_list.exclude(tree_type__contains="小乔木").filter(tree_type__contains=tree_type_condition)
-                user_list = user_list.filter(tree_type__contains=tree_type_condition)
+            # if tree_type_condition:
+            #     if tree_type_condition == "乔木":
+            #         user_list = user_list.exclude(tree_type__contains="小乔木").filter(tree_type__contains=tree_type_condition)
+            #     user_list = user_list.filter(tree_type__contains=tree_type_condition)
             
-            if leaf_type_condition != "任意":
-                user_list = user_list.filter(tree_type__contains=leaf_type_condition)
-            if tree_value_condition != "任意":
-                user_list = user_list.filter(tree_value__contains=tree_value_condition)
-            if tree_shape_condition != "任意":
-                user_list = user_list.filter(tree_shape__contains=tree_shape_condition)
+            if leaf_type_condition != "常绿或落叶":
+                user_list = user_list.filter(leaf_type__contains=leaf_type_condition)
             if soil_condition != "任意土质":
-                user_list = user_list.filter(soil__contains=soil_condition)
-            if pollution_condition != "环境较好":
-                user_list = user_list.filter(pollution_tolerance__contains=pollution_condition)
+                user_list = user_list.filter(Q(soil__contains=soil_condition) | Q(soil__contains='不严'))
 
             # 高级查询结果
             b = Q()
@@ -85,15 +80,27 @@ def index(request):
                 f = f | Q(fruit_color__icontains=elem)
             l = Q()
             for elem in leaf_color_checked:
-                l = l | Q(leaf_color__contains=elem)
-            user_list = user_list.filter(b & f & l)
+                l = l | Q(leaf_color__icontains=elem)
+            t = Q()
+            for elem in tree_type_condition:
+                t = t | Q(tree_type__icontains=elem)
+            s = Q()
+            for elem in tree_shape_condition:
+                s = s | Q(tree_shape__icontains=elem)
+            v = Q()
+            for elem in tree_value_condition:
+                v = v | Q(tree_value__icontains=elem)
+            p = Q()
+            for elem in pollution_condition:
+                p = p | Q(pollution_tolerance__icontains=elem)
+            user_list = user_list.filter(b & f & l & t & s & v & p)
 
             countNum = 0
             countNum = user_list.count()
             time = (connection.queries)[0].get('time')
 
             # 显示分页操作
-            paginator = Paginator(user_list, 20)
+            paginator = Paginator(user_list, 10)
             page = request.GET.get('page')
             try:
                 users = paginator.page(page)
@@ -103,14 +110,16 @@ def index(request):
             except EmptyPage:
                 # 如果请求的页数不在合法的页数范围内，返回结果的最后一页。
                 users = paginator.page(paginator.num_pages)
-
+            
+            query_params = request.GET.copy()
             return render(request, templateView, {
                     'countNum': countNum,
-                    # 'condition': condition,
                     'keywords': keywords,
                     'form': form,
                     'users': users,
                     'time': time,
+                    'query_params': query_params,
+                    'paginator': paginator,
                 })
 
             # 查询不到数据, 显示没有数据的浮窗
