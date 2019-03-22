@@ -67,7 +67,7 @@ def index(request):
             #     user_list = user_list.filter(tree_type__contains=tree_type_condition)
             
             if leaf_type_condition != "常绿或落叶":
-                user_list = user_list.filter(leaf_type__contains=leaf_type_condition)
+                user_list = user_list.filter(tree_type__contains=leaf_type_condition)
             if soil_condition != "任意土质":
                 user_list = user_list.filter(Q(soil__contains=soil_condition) | Q(soil__contains='不严'))
 
