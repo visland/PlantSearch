@@ -79,7 +79,7 @@ SOIL_CHOICES = (
 POLLUTION_CHOICES = (
     ('烟尘','烟尘大'),
     ('有害气体','气体污染大'),
-    ('风','风大'),
+    # ('风','风大'),
 )
 class QueryUserForm(forms.Form):
     queryContent = forms.CharField(
