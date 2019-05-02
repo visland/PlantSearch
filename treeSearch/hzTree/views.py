@@ -100,7 +100,7 @@ def index(request):
             time = (connection.queries)[0].get('time')
 
             # 显示分页操作
-            paginator = Paginator(user_list, 10)
+            paginator = Paginator(user_list, 5)
             page = request.GET.get('page')
             try:
                 users = paginator.page(page)
