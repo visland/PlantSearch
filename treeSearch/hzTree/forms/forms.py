@@ -6,7 +6,6 @@ BLOOM_COLOR_CONDITION_CHOICES = (
     ('红', '红色'),
     ('黄', '黄色'),
     ('紫', '紫色'),
-    ('绿', '绿色'),
 )
 
 FRUIT_COLOR_CONDITION_CHOICES = (
@@ -14,6 +13,7 @@ FRUIT_COLOR_CONDITION_CHOICES = (
     ('黄', '黄色'),
     ('红', '红色'),
     ('紫', '紫色'),
+    ('黑', '黑色'),
 )
 
 LEAF_COLOR_CONDITION_CHOICES = (
@@ -66,8 +66,8 @@ SHAPE_CHOICES = (
     ('塔', '尖塔形'),
     ('锥', '圆锥形'),
     ('伞', '伞形'),
-    ('柱','圆柱形'),
     ('球','圆球形'),
+    ('丛','丛生形'),
 )
 
 SOIL_CHOICES = (
@@ -80,8 +80,8 @@ SOIL_CHOICES = (
 POLLUTION_CHOICES = (
     ('烟尘','烟尘大'),
     ('有害气体','气体污染大'),
-    # ('风','风大'),
 )
+
 class QueryUserForm(forms.Form):
     queryContent = forms.CharField(
         required=False,
